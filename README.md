@@ -1,39 +1,127 @@
-# Single Page Audit Tool
+# Single-Page Website Audit Tool
 
-TypeScript + Playwright repository for auditing one public web page and producing:
-- `report.json` for developers
-- `report.md` for client-facing summary
-- `screenshot.png` as evidence
+TypeScript + Playwright tool that audits a public landing page and generates structured JSON, client-readable Markdown, and visual evidence.
+
+It covers SEO basics, technical issues, tracking observations, and CTA detection with deterministic rules.
+
+## Who This Is For
+
+- Founders and agencies who need a fast technical audit deliverable before redesign or SEO retainers.
+- QA/SEO consultants who need reproducible evidence (JSON + Markdown + screenshot) for client reports.
+- Engineering teams that want a CI-friendly single-page audit baseline before deeper multi-page crawling.
 
 ## Features
-- Single-page audit
-- Local artifact storage
-- CLI and importable API usage
-- Deterministic rule-based findings
-- Bounded evidence collection (console and tracking streams are capped)
+
+- Single-page audit from URL input.
+- Local artifact storage (`report.json`, `report.md`, `screenshot.png`).
+- CLI and importable API usage.
+- Deterministic rule-based findings.
+- Bounded evidence collection for console and tracking streams.
+
+## Sample Audit Runs
+
+### Run 1: Speedtest baseline
+- URL: `https://www.speedtest.net/`
+- Evidence:
+  - [screenshot](docs/samples/run-01-speedtest-baseline/screenshot.png)
+  - [clipped excerpt](docs/samples/run-01-speedtest-baseline/excerpt.md)
+  - [summary JSON](docs/samples/run-01-speedtest-baseline/summary.json)
+
+Excerpt:
+```json
+{
+  "summary": "2 issues were detected within the current audit scope.",
+  "issues": [
+    { "id": "SEO_H1_MISSING", "severity": "high" },
+    { "id": "TECH_CONSOLE_ERRORS", "severity": "medium" }
+  ],
+  "trackingStatus": "observed"
+}
+```
+
+### Run 2: Speedtest repeatability snapshot
+- URL: `https://www.speedtest.net/`
+- Evidence:
+  - [screenshot](docs/samples/run-02-speedtest-repeatability/screenshot.png)
+  - [clipped excerpt](docs/samples/run-02-speedtest-repeatability/excerpt.md)
+  - [summary JSON](docs/samples/run-02-speedtest-repeatability/summary.json)
+
+Excerpt:
+```json
+{
+  "summary": "2 issues were detected within the current audit scope.",
+  "issues": [
+    { "id": "SEO_H1_MISSING", "severity": "high" },
+    {
+      "id": "TECH_CONSOLE_ERRORS",
+      "severity": "medium",
+      "evidence": "19 console error(s) were captured during the audit window."
+    }
+  ]
+}
+```
+
+### Run 3: Example.com baseline
+- URL: `https://example.com/`
+- Evidence:
+  - [screenshot](docs/samples/run-03-example-com/screenshot.png)
+  - [clipped excerpt](docs/samples/run-03-example-com/excerpt.md)
+  - [summary JSON](docs/samples/run-03-example-com/summary.json)
+
+Excerpt:
+```json
+{
+  "summary": "4 issues were detected within the current audit scope.",
+  "issues": [
+    { "id": "SEO_META_DESCRIPTION_MISSING", "severity": "high" },
+    { "id": "SEO_CANONICAL_MISSING", "severity": "medium" },
+    { "id": "TRACKING_NOT_OBSERVED", "severity": "medium" }
+  ],
+  "trackingStatus": "not_observed"
+}
+```
+
+## Limitations
+
+- This is a single-page technical audit, not a full-site crawler.
+- Tracking results indicate observed network behavior during the audit window, not full analytics correctness.
+- JS-heavy pages can vary by geo, consent, or bot defenses, so repeat runs may differ.
+- Findings are deterministic rule outputs and should be combined with manual review for strategy decisions.
+- The current output is local-file based; there is no built-in report database/API service layer yet.
 
 ## Install
+
 ```bash
 pnpm install
 npx playwright install chromium
 ```
 
-## Quality gates
+If `pnpm` is not available:
+
+```bash
+npm install
+npx playwright install chromium
+```
+
+## Quality Gates
+
 ```bash
 npm run check
 ```
 
-This command enforces:
+This enforces:
 - TypeScript typecheck
-- ESLint (zero warnings allowed)
-- Vitest unit + integration test suite
+- ESLint (`--max-warnings=0`)
+- Vitest unit and integration tests
 
 ## Run from CLI
+
 ```bash
 pnpm audit https://example.com
 ```
 
 Optional flags:
+
 ```bash
 pnpm audit https://example.com --output-dir ./reports --no-screenshot --wait-until networkidle --network-idle-timeout-ms 5000 --post-load-wait-ms 1000 --stability-timeout-ms 4000 --stability-poll-interval-ms 250 --required-stable-polls 3 --include-full-urls
 ```
@@ -51,19 +139,21 @@ URL artifact privacy:
 - URL query strings and fragments are redacted in report artifacts and output directory naming by default.
 - Add `--include-full-urls` only when full URL persistence is explicitly required.
 
-## Use from code
+## Use from Code
+
 ```ts
 import { auditPage } from './src/index.js';
 
 const result = await auditPage('https://example.com', {
   outputBaseDir: 'reports',
-  takeScreenshot: true,
+  takeScreenshot: true
 });
 
 console.log(result.summary);
 ```
 
-## Output structure
+## Output Structure
+
 ```text
 reports/
   2026-04-13T10-42-11-123Z_example.com/
@@ -72,8 +162,7 @@ reports/
     screenshot.png
 ```
 
-## Scope notes
-This tool performs a **technical page audit**, not a full SEO strategy audit.
+## Scope Notes
 
 Current rule areas:
 - SEO basics
@@ -81,8 +170,13 @@ Current rule areas:
 - Tracking observations
 - UX/CTA presence (confidence-scored candidates)
 
-## Next sensible extensions
+## Next Sensible Extensions
+
 - HTTP response and redirect chain capture
 - More precise CTA detection
 - Audience-specific Markdown templates
 - Optional AI summary layer over the deterministic report
+
+## Market Readiness (GitHub)
+
+For repository description/topics, rename guidance, and release tagging (`v1.0.0`), see [docs/MARKET_READINESS.md](docs/MARKET_READINESS.md).

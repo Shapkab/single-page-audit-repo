@@ -1,0 +1,28 @@
+{
+  "inputUrl": "https://example.com/",
+  "finalUrl": "https://example.com/",
+  "httpStatus": 200,
+  "summary": "4 issues were detected within the current audit scope.",
+  "topIssues": [
+    {
+      "id": "SEO_META_DESCRIPTION_MISSING",
+      "severity": "high",
+      "title": "Meta description is missing"
+    },
+    {
+      "id": "SEO_CANONICAL_MISSING",
+      "severity": "medium",
+      "title": "Canonical tag is missing"
+    },
+    {
+      "id": "TRACKING_NOT_OBSERVED",
+      "severity": "medium",
+      "title": "No common tracking requests were observed"
+    }
+  ],
+  "trackingStatus": "not_observed",
+  "ctaTop": {
+    "text": "Learn more",
+    "confidence": "high"
+  }
+}

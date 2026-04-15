@@ -1,0 +1,21 @@
+{
+  "inputUrl": "https://www.speedtest.net/",
+  "finalUrl": "https://www.speedtest.net/",
+  "httpStatus": 200,
+  "summary": "2 issues were detected within the current audit scope.",
+  "topIssues": [
+    {
+      "id": "SEO_H1_MISSING",
+      "severity": "high",
+      "title": "H1 heading is missing"
+    },
+    {
+      "id": "TECH_CONSOLE_ERRORS",
+      "severity": "medium",
+      "title": "Console errors detected",
+      "evidence": "19 console error(s) were captured during the audit window."
+    }
+  ],
+  "trackingStatus": "observed",
+  "ctaCandidatesCount": 12
+}
