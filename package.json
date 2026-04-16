@@ -4,6 +4,9 @@
   "private": true,
   "description": "Single-page audit tool with Playwright, TypeScript, JSON + Markdown reports, and local artifacts.",
   "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "audit": "tsx src/cli.ts",
     "build": "tsc -p tsconfig.json",

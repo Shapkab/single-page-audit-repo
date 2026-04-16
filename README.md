@@ -39,34 +39,12 @@ Excerpt:
 }
 ```
 
-### Run 2: Speedtest repeatability snapshot
-- URL: `https://www.speedtest.net/`
-- Evidence:
-  - [screenshot](docs/samples/run-02-speedtest-repeatability/screenshot.png)
-  - [clipped excerpt](docs/samples/run-02-speedtest-repeatability/excerpt.md)
-  - [summary JSON](docs/samples/run-02-speedtest-repeatability/summary.json)
-
-Excerpt:
-```json
-{
-  "summary": "2 issues were detected within the current audit scope.",
-  "issues": [
-    { "id": "SEO_H1_MISSING", "severity": "high" },
-    {
-      "id": "TECH_CONSOLE_ERRORS",
-      "severity": "medium",
-      "evidence": "19 console error(s) were captured during the audit window."
-    }
-  ]
-}
-```
-
-### Run 3: Example.com baseline
+### Run 2: Example.com baseline
 - URL: `https://example.com/`
 - Evidence:
-  - [screenshot](docs/samples/run-03-example-com/screenshot.png)
-  - [clipped excerpt](docs/samples/run-03-example-com/excerpt.md)
-  - [summary JSON](docs/samples/run-03-example-com/summary.json)
+  - [screenshot](docs/samples/run-02-example-com/screenshot.png)
+  - [clipped excerpt](docs/samples/run-02-example-com/excerpt.md)
+  - [summary JSON](docs/samples/run-02-example-com/summary.json)
 
 Excerpt:
 ```json
@@ -88,6 +66,11 @@ Excerpt:
 - JS-heavy pages can vary by geo, consent, or bot defenses, so repeat runs may differ.
 - Findings are deterministic rule outputs and should be combined with manual review for strategy decisions.
 - The current output is local-file based; there is no built-in report database/API service layer yet.
+
+## Distribution Model
+
+- This repository is intentionally `private: true` and is not published as an npm package.
+- Use it as a repository-level tool via CLI/API inside your engineering workflow.
 
 ## Install
 
@@ -176,7 +159,3 @@ Current rule areas:
 - More precise CTA detection
 - Audience-specific Markdown templates
 - Optional AI summary layer over the deterministic report
-
-## Market Readiness (GitHub)
-
-For repository description/topics, rename guidance, and release tagging (`v1.0.0`), see [docs/MARKET_READINESS.md](docs/MARKET_READINESS.md).
